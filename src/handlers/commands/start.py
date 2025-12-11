@@ -1,7 +1,12 @@
 from aiogram import types
-from utils import get_data
+from aiogram.filters import Command
+
+from handlers.commands import command_router
+from utils.messages import get_data
 
 
+@command_router.message(Command("start"))
 async def send_start(msg: types.Message):
-    text, markup, parse_mode = await get_data(msg, "start")
-    await msg.answer(text.format(user=msg.from_user.username), reply_markup=markup, parse_mode=parse_mode)
+    args = await get_data(msg, "start")
+    args["text"]=args["text"].format(user=msg.from_user.username)
+    await msg.answer(**args)

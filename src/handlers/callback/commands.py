@@ -1,8 +1,9 @@
 from aiogram import types
 
 from handlers import send_start, send_help
+from handlers.callback import callback_router
 
-
+@callback_router.callback_query(lambda q: q.data and q.data.startswith("command:"))
 async def callback_command(query: types.CallbackQuery):
     cmd = query.data.split(":", 1)[1]
 

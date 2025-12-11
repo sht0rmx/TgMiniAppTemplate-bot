@@ -5,7 +5,8 @@ from utils import logger
 
 
 class TranslationManager:
-    def __init__(self, path="locales"):
+    def __init__(self, path="src/locales"):
+        logger.debug(f"[Translations] app workdir: {os.getcwd()}")
         self.path = path
         self.data = {}
         self.load_all()
@@ -14,7 +15,7 @@ class TranslationManager:
         try:
             for file in os.listdir(self.path):
                 if file.endswith(".json"):
-                    with open(os.path.join(self.path, file), "r", encoding="utf-8") as f:
+                    with open(os.path.join(self.path, file), encoding="utf-8") as f:
                         lang = json.load(f)
                         alias = lang.get("lang-alias")
                         if alias:
